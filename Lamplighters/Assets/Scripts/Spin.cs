@@ -20,7 +20,7 @@ public class Spin : MonoBehaviour
     void OnMouseDrag()
     {
         Ray ray = view.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 50, 3)) {
             //Ignore first click
             if (prevHit == Vector3.zero) prevHit = raycastHit.point;
 
