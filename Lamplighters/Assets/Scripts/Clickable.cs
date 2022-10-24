@@ -6,6 +6,7 @@ public class Clickable : MonoBehaviour
 {
     private GameManager manager;
     public Camera mainCam;
+    public bool dayNight;
     public Vector2 timeRange;
     public bool active;
     public bool collected;
@@ -17,12 +18,12 @@ public class Clickable : MonoBehaviour
 
     void Update()
     {
-        active = (manager.countdown < timeRange.x && manager.countdown > timeRange.y);
+        active = ((manager.dayNight == dayNight) && manager.countdown < timeRange.x && manager.countdown > timeRange.y);
     }
 
     void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) && active) {
+        if (Input.GetMouseButton(0) && active && manager.gaming) {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 if (raycastHit.collider.CompareTag("Respawn")) {

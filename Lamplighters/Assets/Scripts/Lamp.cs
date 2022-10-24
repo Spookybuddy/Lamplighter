@@ -13,12 +13,13 @@ public class Lamp : MonoBehaviour
     void Start()
     {
         manager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
-        Fluctuate();
     }
 
     void FixedUpdate()
     {
-        if (Input.GetMouseButton(0) && !hit && manager.countdown < 5) {
+        lampLight.SetActive(onOff);
+        //Light can only be turned on/off when its 5 seconds to Sunrise/set
+        if (Input.GetMouseButton(0) && !hit && manager.countdown < 5 && manager.gaming) {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 if (raycastHit.collider.CompareTag("Finish")) {
@@ -34,7 +35,6 @@ public class Lamp : MonoBehaviour
     {
         onOff = !onOff;
         manager.dayNight = !manager.dayNight;
-        lampLight.SetActive(onOff);
     }
 
     private IEnumerator Delay()
