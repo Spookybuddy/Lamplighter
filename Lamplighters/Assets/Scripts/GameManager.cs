@@ -5,24 +5,32 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    //Lamp
     public float countdown;
     public bool dayNight;
     public GameObject sunlight;
     public GameObject lamp;
     private Lamp L;
 
+    //Collectables
+    public GameObject[] toFindDisplay;
+    private int findID;
+    private bool holding;
+    private GameObject[] collectables;
+
+    //Menus
     public bool mainMenu;
     public bool paused;
     public bool helping;
     public bool failure;
     public bool gaming;
-
     public GameObject menu;
     public GameObject pause;
     public GameObject help;
     public GameObject lose;
     public GameObject inGame;
     public TextMeshProUGUI timer;
+    public TextMeshProUGUI request;
 
     void Start()
     {
@@ -41,8 +49,13 @@ public class GameManager : MonoBehaviour
         }
 
         //Timer and Sunset/rise
-        timer.text = "0:" + Mathf.Floor(countdown);
+        timer.text = "0:" + Mathf.Floor(countdown).ToString("00");
+        if (countdown < 6) timer.color = Color.red;
+        else timer.color = Color.grey;
         sunlight.transform.eulerAngles = new Vector3(((dayNight ? 30 : 60) - countdown) * 6, 0, 0);
+
+        //Request ID
+        request.text = "Find Item: " + toFindDisplay[findID].name;
 
         //Show correct menus
         menu.SetActive(mainMenu);
@@ -50,6 +63,26 @@ public class GameManager : MonoBehaviour
         pause.SetActive(paused);
         lose.SetActive(failure);
         inGame.SetActive(gaming);
+
+        collectables = GameObject.FindGameObjectsWithTag("Respawn");
+    }
+
+    public void Selection(GameObject selected, int ID)
+    {
+        //Deselect all other objects
+        foreach (GameObject item in collectables) {
+            item.GetComponent<Clickable>().selected = false;
+            if (item == selected) item.GetComponent<Clickable>().selected = true;
+        }
+
+        //Compare IDs
+        if (findID == ID) NewRequest(ID);
+    }
+
+    private void NewRequest(int not)
+    {
+        findID = Random.Range(0, toFindDisplay.Length);
+        while (findID == not) findID = Random.Range(0, toFindDisplay.Length);
     }
 
     //MENU BUTTONS
