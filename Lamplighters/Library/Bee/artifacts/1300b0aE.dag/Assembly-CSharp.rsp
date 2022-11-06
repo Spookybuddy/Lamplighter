@@ -343,6 +343,7 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Lamp.cs"
 "Assets/Scripts/Spin.cs"
+"Assets/Scripts/Tutorials.cs"
 -langversion:9.0
 
 /deterministic

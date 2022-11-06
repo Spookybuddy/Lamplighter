@@ -12,6 +12,7 @@ public class Clickable : MonoBehaviour
     public int ID;
     public bool dayNight;
     public Vector2 timeRange;
+    public AudioClip clicked;
 
     private bool active;
     private MeshRenderer mesh;
@@ -30,7 +31,8 @@ public class Clickable : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 if (raycastHit.collider.CompareTag("Respawn") && raycastHit.collider.gameObject == gameObject) {
                     selected = true;
-                    manager.Selection(gameObject, ID);
+                    manager.tutored2 = true;
+                    manager.Selection(gameObject, ID, clicked);
                 }
             }
         }
@@ -45,10 +47,5 @@ public class Clickable : MonoBehaviour
         } else {
             transform.parent = planet.transform;
         }
-    }
-
-    void FixedUpdate()
-    {
-
     }
 }

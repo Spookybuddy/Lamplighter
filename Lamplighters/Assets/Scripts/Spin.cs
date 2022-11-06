@@ -6,6 +6,8 @@ public class Spin : MonoBehaviour
 {
     public Camera view;
     public Rigidbody rig;
+    public GameManager manage;
+    private int swipes = 0;
 
     //Raycasts
     private Vector3 prevHit;
@@ -30,6 +32,8 @@ public class Spin : MonoBehaviour
                 invert = new Vector3(invert.y, -invert.x, invert.z);
                 rig.AddTorque(invert * 50 * Vector3.Distance(prevHit, raycastHit.point), ForceMode.Impulse);
                 prevHit = raycastHit.point;
+                if (manage.gaming) swipes++;
+                if (swipes > 20) manage.tutored = true;
             }
         }
     }
