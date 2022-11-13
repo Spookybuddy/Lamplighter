@@ -27,7 +27,7 @@ public class Spin : MonoBehaviour
             if (prevHit == Vector3.zero) prevHit = raycastHit.point;
 
             //Spin if the raycast has moved
-            if (Vector3.Distance(prevHit, raycastHit.point) > 0.1f) {
+            if (Vector3.Distance(prevHit, raycastHit.point) > 0.05f) {
                 invert = (raycastHit.point - prevHit);
                 invert = new Vector3(invert.y, -invert.x, invert.z);
                 rig.AddTorque(invert * 50 * Vector3.Distance(prevHit, raycastHit.point), ForceMode.Impulse);

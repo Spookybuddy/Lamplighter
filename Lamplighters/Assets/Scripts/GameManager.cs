@@ -33,10 +33,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI request;
 
     public bool tutored;
-    public bool tutored2;
     public GameObject swiper;
-    public GameObject tap;
 
+    public AudioSource MusicManager;
     public AudioClip wrong;
     private AudioSource jukebox;
 
@@ -46,7 +45,6 @@ public class GameManager : MonoBehaviour
         booleans(true, false, false, false);
         jukebox = GetComponent<AudioSource>();
         tutored = false;
-        tutored2 = false;
     }
 
     void Update()
@@ -60,9 +58,13 @@ public class GameManager : MonoBehaviour
         }
 
         //Timer and Sunset/rise
-        timer.text = "0:" + Mathf.Floor(countdown).ToString("00");
-        if (countdown < 6) timer.color = Color.red;
-        else timer.color = Color.grey;
+        if (countdown < 6) {
+            timer.color = Color.red;
+            timer.text = "0:" + Mathf.Floor(countdown).ToString("00") + "\nTend the Lamp!";
+        } else {
+            timer.color = Color.grey;
+            timer.text = "0:" + Mathf.Floor(countdown).ToString("00");
+        }
         sunlight.transform.eulerAngles = new Vector3(((dayNight ? 30 : 60) - countdown) * 6, 0, 0);
 
         //Request ID
@@ -77,9 +79,11 @@ public class GameManager : MonoBehaviour
 
         //Tutorial gif
         swiper.SetActive(!tutored && gaming);
-        tap.SetActive(!tutored2 && gaming);
 
         collectables = GameObject.FindGameObjectsWithTag("Respawn");
+
+        //Music volume
+        MusicManager.volume = gaming ? 0.6f : 0.3f;
     }
 
     public void Selection(GameObject selected, int ID, AudioClip clip)
