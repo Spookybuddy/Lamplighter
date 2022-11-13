@@ -21,7 +21,7 @@ public class Lamp : MonoBehaviour
         //Light can only be turned on/off when its 5 seconds to Sunrise/set
         if (Input.GetMouseButton(0) && !hit && manager.countdown < 5 && manager.gaming) {
             Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit, 100, 6)) {
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 100, 6, QueryTriggerInteraction.Collide)) {
                 if (raycastHit.collider.CompareTag("Finish")) {
                     hit = true;
                     StartCoroutine(Delay());

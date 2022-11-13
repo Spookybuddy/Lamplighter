@@ -31,7 +31,6 @@ public class Clickable : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit raycastHit)) {
                 if (raycastHit.collider.CompareTag("Respawn") && raycastHit.collider.gameObject == gameObject) {
                     selected = true;
-                    manager.tutored2 = true;
                     manager.Selection(gameObject, ID, clicked);
                 }
             }
